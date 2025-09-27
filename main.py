@@ -10,19 +10,19 @@ st.markdown(
     <style>
     /* Main app background */
     body {
-        background-color: #1e1e1e;  /* dark asphalt */
-        color: #ffffff;             /* white text */
-    }
+        background-color: #1e1e1e;
+        color: #ffffff;             
+    }* da
 
     /* Sidebar background */
     .sidebar .sidebar-content {
-        background-color: #2b2b2b;  /* slightly lighter dark for sidebar */
+        background-color: #2b2b2b;
         color: #ffffff;
     }
 
     /* Headers and titles */
     .stTitle, h1, h2, h3 {
-        color: #ff0000;  /* F1 red accent */
+        color: #ff0000;
     }
 
     /* Buttons */
@@ -57,7 +57,7 @@ st.markdown("By Omkar Gajare - Bhartiya Vidya Bhavan's Sardar Patel Institute of
 
 
 with st.sidebar:
-    year = st.number_input("Year", min_value=2000, max_value=datetime.now().year,value=datetime.now().year)
+    year = st.number_input("Year", min_value=2018, max_value=datetime.now().year,value=datetime.now().year)
     session_type = st.selectbox("Select Session Type", ["FP1","FP2","FP3","Q","R"])
 @st.cache_data
 def get_schedule(year):

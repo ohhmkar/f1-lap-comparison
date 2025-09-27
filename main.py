@@ -1,6 +1,10 @@
 import streamlit as st
 import fastf1
 import matplotlib.pyplot as plt
+import os
+
+if not os.path.exists('cache'):
+    os.makedirs('cache')
 
 fastf1.Cache.enable_cache('cache')
 st.title("F1 LAP COMPARISON TOOL 🏎️ 🏎️ ")
@@ -24,10 +28,14 @@ driver_codes = [
 ]
 driver1 = st.selectbox("Select Driver 1", driver_codes)
 driver2 = st.selectbox("Select Driver 2", driver_codes)
-
+@st.cache_data
+def load_session(year, session_type, race_name):
+    session = fastf1.get_session(year, session_type, race_name)
+    session.load()
+    return session
 def compare_fastest_lap(year,race_name,session_type, driver1, driver2):
     try:
-        session = fastf1.get_session(year, race_name, session_type)
+        session = load_session(year,race_name,session_type)
         session.load()
 
         lap_driver1 = session.laps.pick_driver(driver1).pick_fastest()

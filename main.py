@@ -16,7 +16,7 @@ except Exception as e:
 
 selected_race = st.selectbox("Select Race", available_races)
 
-session_type  = st.selectbox("Select Session Type", ['FP1','FP2','FP3','Qualifying','Race'])
+session_type  = st.selectbox("Select Session Type", ['FP1','FP2','FP3','Q','R'])
 
 driver_codes = [
     'HAM', 'VER', 'LEC', 'RUS', 'PER', 'SAI', 'NOR', 'ALO', 'TSU', 'OCO',
@@ -30,8 +30,8 @@ def compare_fastest_lap(year,race_name,session_type, driver1, driver2):
         session = fastf1.get_session(year, race_name, session_type)
         session.load()
 
-        lap_driver1 = session.laps.pick_driver(driver1).pick_fastest_lap()
-        lap_driver2 = session.laps.pick_driver(driver2).pick_fastest_lap()
+        lap_driver1 = session.laps.pick_driver(driver1).pick_fastest()
+        lap_driver2 = session.laps.pick_driver(driver2).pick_fastest()
 
         if lap_driver1 is None or lap_driver2 is None:
             st.error("One or both drivers have no laps in this session.")

@@ -12,7 +12,9 @@ fastf1.Cache.enable_cache('cache')
 st.title("F1 LAP COMPARISON TOOL 🏎️ 🏎️ ")
 st.markdown("By Omkar Gajare - Bhartiya Vidya Bhavan's Sardar Patel Institute of Technology")
 
-year = st.number_input("Select Year", min_value=2000, max_value=2025, value=2025, step=1)
+with st.sidebar:
+    year = st.number_input("Year", min_value=2000, max_value=datetime.now().year,value=datetime.now().year)
+    session_type = st.selectbox("Select Session Type", ["FP1","FP2","FP3","Q","R"])
 @st.cache_data
 def get_schedule(year):
     return fastf1.get_event_schedule(year)
@@ -35,11 +37,8 @@ try:
 except Exception as e:
     st.error(f"Could not get schedule from {e}")
     available_races = []
-selected_race = st.selectbox("Select Race", available_races)
-
-session_type  = st.selectbox("Select Session Type", ['FP1','FP2','FP3','Q','R'])
-
-
+with st.sidebar:
+    selected_race = st.selectbox("Select Race", available_races)
 @st.cache_data
 
 def load_session(year, race_name, session_type):
@@ -59,8 +58,10 @@ try:
 except Exception as e:
     st.error(f'Could not load session to get drivers: {e}')
     drivers_this_year = []
-driver1 = st.selectbox("Select Driver 1", drivers_this_year)
-driver2 = st.selectbox("Select Driver 2", drivers_this_year)
+
+with st.sidebar:
+    driver1 = st.selectbox("Select Driver 1", drivers_this_year)
+    driver2 = st.selectbox("Select Driver 2", drivers_this_year)
 def compare_fastest_lap(year,race_name,session_type, driver1, driver2):
     try:
         session = load_session(year,race_name,session_type)
@@ -95,7 +96,7 @@ def compare_fastest_lap(year,race_name,session_type, driver1, driver2):
     except Exception as e:
         st.error(f'Error loading session from {e}')
 
-if st.button("Compare F1 Laptime"):
+if st.button("Show Comparative Telemetry"):
     if driver1 == driver2:
         st.warning("Please select two different drivers.")
     else:

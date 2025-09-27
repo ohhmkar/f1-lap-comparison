@@ -77,7 +77,7 @@ try:
         today = datetime.today().date()
         available_races = schedule[(schedule[date_col] <= today)&(~schedule["EventName"].str.contains("Testing",case = False))]['EventName'].tolist()
     else:
-        available_races = [race for race in schedule["EventName"].tolist() if "Testing" not in race]
+        available_races = [race for race in schedule["EventName"].tolist() if "Testing" or "Test" not in race]
 except Exception as e:
     st.error(f"Could not get schedule from {e}")
     available_races = []

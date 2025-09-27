@@ -5,6 +5,49 @@ import os
 import pandas as pd
 from datetime import datetime
 
+st.markdown(
+    """
+    <style>
+    /* Main app background */
+    body {
+        background-color: #1e1e1e;  /* dark asphalt */
+        color: #ffffff;             /* white text */
+    }
+
+    /* Sidebar background */
+    .sidebar .sidebar-content {
+        background-color: #2b2b2b;  /* slightly lighter dark for sidebar */
+        color: #ffffff;
+    }
+
+    /* Headers and titles */
+    .stTitle, h1, h2, h3 {
+        color: #ff0000;  /* F1 red accent */
+    }
+
+    /* Buttons */
+    .stButton button {
+        background-color: #ff0000;
+        color: #ffffff;
+        border-radius: 5px;
+    }
+
+    /* Expander headers */
+    .st-expander {
+        background-color: #2b2b2b;
+        color: #ffffff;
+    }
+
+    /* Plot container background */
+    .stPlotlyChart, .element-container {
+        background-color: #1e1e1e;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 if not os.path.exists('cache'):
     os.makedirs('cache')
 

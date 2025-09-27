@@ -22,17 +22,24 @@ selected_race = st.selectbox("Select Race", available_races)
 
 session_type  = st.selectbox("Select Session Type", ['FP1','FP2','FP3','Q','R'])
 
-driver_codes = [
-    'HAM', 'VER', 'LEC', 'RUS', 'PER', 'SAI', 'NOR', 'ALO', 'TSU', 'OCO',
-    'MAG', 'GAS', 'STR', 'BOT', 'ZHO', 'LAT', 'VET', 'MSC', 'RIC','PIA','ANT'
-]
-driver1 = st.selectbox("Select Driver 1", driver_codes)
-driver2 = st.selectbox("Select Driver 2", driver_codes)
+
 @st.cache_data
 def load_session(year, session_type, race_name):
     session = fastf1.get_session(year, session_type, race_name)
     session.load()
     return session
+try:
+    session_for_drivers = load_session(year, selected_race, session_type)
+    drivers_this_year = []
+    for d in session_for_drivers.drivers:
+        driver = session_for_drivers.get_driver(d)
+        code = getattr(driver, 'Abbreviation',None) or driver["Abbreviation"]
+        drivers_this_year.append(code)
+except Exception as e:
+    st.error(f'Could not load session to get drivers: {e}')
+    drivers_this_year = []
+driver1 = st.selectbox("Select Driver 1", drivers_this_year)
+driver2 = st.selectbox("Select Driver 2", drivers_this_year)
 def compare_fastest_lap(year,race_name,session_type, driver1, driver2):
     try:
         session = load_session(year,race_name,session_type)
@@ -63,4 +70,7 @@ def compare_fastest_lap(year,race_name,session_type, driver1, driver2):
         st.error(f'Error loading session from {e}')
 
 if st.button("Compare F1 Laptime"):
-    compare_fastest_lap(year,selected_race,session_type,driver1,driver2)
+    if driver1 == driver2:
+        st.warning("Please select two different drivers.")
+    else:
+        compare_fastest_lap(year, selected_race, session_type, driver1, driver2)

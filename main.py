@@ -11,7 +11,6 @@ if not os.path.exists('cache'):
 fastf1.Cache.enable_cache('cache')
 st.title("F1 LAP COMPARISON TOOL 🏎️ 🏎️ ")
 st.markdown("By Omkar Gajare - Bhartiya Vidya Bhavan's Sardar Patel Institute of Technology")
-st.image("https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Formula_1_logo.svg/1280px-Formula_1_logo.svg.png", width=200)
 
 
 with st.sidebar:
@@ -33,9 +32,9 @@ try:
     if date_col:
         schedule[date_col] = pd.to_datetime(schedule[date_col]).dt.date
         today = datetime.today().date()
-        available_races = schedule[schedule[date_col] <= today]['EventName'].tolist()
+        available_races = schedule[(schedule[date_col] <= today)&(~schedule["EventName"].str.contains("Testing",case = False))]['EventName'].tolist()
     else:
-        available_races = schedule['EventName'].tolist()
+        available_races = [race for race in schedule["EventName"].tolist() if "Testing" not in race]
 except Exception as e:
     st.error(f"Could not get schedule from {e}")
     available_races = []

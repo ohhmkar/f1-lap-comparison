@@ -11,6 +11,8 @@ if not os.path.exists('cache'):
 fastf1.Cache.enable_cache('cache')
 st.title("F1 LAP COMPARISON TOOL 🏎️ 🏎️ ")
 st.markdown("By Omkar Gajare - Bhartiya Vidya Bhavan's Sardar Patel Institute of Technology")
+st.image("https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Formula_1_logo.svg/1280px-Formula_1_logo.svg.png", width=200)
+
 
 with st.sidebar:
     year = st.number_input("Year", min_value=2000, max_value=datetime.now().year,value=datetime.now().year)

@@ -77,7 +77,7 @@ def compare_fastest_lap(year,race_name,session_type, driver1, driver2):
         tel1 = lap_driver1.get_car_data().add_distance()
         tel2 = lap_driver2.get_car_data().add_distance()
 
-        metrics = ["Speed","Throttle","Brake","Gear","RPM"]
+        metrics = ["Speed","Throttle","Brake","RPM"]
         colors = {"driver1":"red", "driver2":"blue"}
         for metric in metrics:
             with st.expander(f"{metric} telemetry"):
